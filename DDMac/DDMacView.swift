@@ -15,7 +15,9 @@ struct DDMacView: View {
     var body: some View {
         VStack {
             HeaderView()
+            Divider()
             NavigationFilterView(viewModel: viewModel)
+            Divider()
             NavigationView {
                 Sidebar()
                 PrimaryView()

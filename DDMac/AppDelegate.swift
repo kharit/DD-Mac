@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  DDMac
 //
-//  Created by Vasiliy Kharitonov on 02.07.2020.
+//  Created by Vasiliy Kharitonov on 04.07.2020.
 //  Copyright © 2020 Kharit. All rights reserved.
 //
 
@@ -17,7 +17,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView()
+        
+        let app = DDMacApp()
+        let contentView = DDMacView(viewModel: app)
 
         // Create the window and set the content view. 
         window = NSWindow(

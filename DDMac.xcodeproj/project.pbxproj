@@ -3,17 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		E318601F24AE4FB100601F42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E318601E24AE4FB100601F42 /* AppDelegate.swift */; };
-		E318602124AE4FB100601F42 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E318602024AE4FB100601F42 /* ContentView.swift */; };
+		E318602124AE4FB100601F42 /* DDMacView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E318602024AE4FB100601F42 /* DDMacView.swift */; };
 		E318602324AE4FB300601F42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E318602224AE4FB300601F42 /* Assets.xcassets */; };
 		E318602624AE4FB300601F42 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E318602524AE4FB300601F42 /* Preview Assets.xcassets */; };
 		E318602924AE4FB300601F42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E318602724AE4FB300601F42 /* Main.storyboard */; };
 		E318603524AE4FB300601F42 /* DDMacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E318603424AE4FB300601F42 /* DDMacTests.swift */; };
 		E318604024AE4FB300601F42 /* DDMacUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E318603F24AE4FB300601F42 /* DDMacUITests.swift */; };
+		E318605024AE503900601F42 /* DDCore in Frameworks */ = {isa = PBXBuildFile; productRef = E318604F24AE503900601F42 /* DDCore */; };
+		E32C28C424AE5A1700ACAD0A /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32C28C324AE5A1700ACAD0A /* HeaderView.swift */; };
+		E32C28CA24AE5D9B00ACAD0A /* NavigationFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32C28C924AE5D9B00ACAD0A /* NavigationFilterView.swift */; };
+		E32C28CC24AE5DCE00ACAD0A /* DDMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32C28CB24AE5DCE00ACAD0A /* DDMacApp.swift */; };
+		E32C28CE24AE6EE300ACAD0A /* DDMacModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32C28CD24AE6EE300ACAD0A /* DDMacModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +41,7 @@
 /* Begin PBXFileReference section */
 		E318601B24AE4FB100601F42 /* DDMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DDMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E318601E24AE4FB100601F42 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E318602024AE4FB100601F42 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E318602024AE4FB100601F42 /* DDMacView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDMacView.swift; sourceTree = "<group>"; };
 		E318602224AE4FB300601F42 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E318602524AE4FB300601F42 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E318602824AE4FB300601F42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -48,6 +53,11 @@
 		E318603B24AE4FB300601F42 /* DDMacUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DDMacUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E318603F24AE4FB300601F42 /* DDMacUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDMacUITests.swift; sourceTree = "<group>"; };
 		E318604124AE4FB300601F42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E318604D24AE4FEE00601F42 /* DDCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DDCore; path = ../DDCore; sourceTree = "<group>"; };
+		E32C28C324AE5A1700ACAD0A /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		E32C28C924AE5D9B00ACAD0A /* NavigationFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationFilterView.swift; sourceTree = SOURCE_ROOT; };
+		E32C28CB24AE5DCE00ACAD0A /* DDMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDMacApp.swift; sourceTree = "<group>"; };
+		E32C28CD24AE6EE300ACAD0A /* DDMacModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDMacModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E318605024AE503900601F42 /* DDCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,10 +89,12 @@
 		E318601224AE4FB100601F42 = {
 			isa = PBXGroup;
 			children = (
+				E318604D24AE4FEE00601F42 /* DDCore */,
 				E318601D24AE4FB100601F42 /* DDMac */,
 				E318603324AE4FB300601F42 /* DDMacTests */,
 				E318603E24AE4FB300601F42 /* DDMacUITests */,
 				E318601C24AE4FB100601F42 /* Products */,
+				E318604E24AE503900601F42 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,8 +111,12 @@
 		E318601D24AE4FB100601F42 /* DDMac */ = {
 			isa = PBXGroup;
 			children = (
+				E32C28C924AE5D9B00ACAD0A /* NavigationFilterView.swift */,
+				E32C28CB24AE5DCE00ACAD0A /* DDMacApp.swift */,
+				E32C28CD24AE6EE300ACAD0A /* DDMacModel.swift */,
 				E318601E24AE4FB100601F42 /* AppDelegate.swift */,
-				E318602024AE4FB100601F42 /* ContentView.swift */,
+				E318602024AE4FB100601F42 /* DDMacView.swift */,
+				E32C28C324AE5A1700ACAD0A /* HeaderView.swift */,
 				E318602224AE4FB300601F42 /* Assets.xcassets */,
 				E318602724AE4FB300601F42 /* Main.storyboard */,
 				E318602A24AE4FB300601F42 /* Info.plist */,
@@ -135,6 +152,13 @@
 			path = DDMacUITests;
 			sourceTree = "<group>";
 		};
+		E318604E24AE503900601F42 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -151,6 +175,9 @@
 			dependencies = (
 			);
 			name = DDMac;
+			packageProductDependencies = (
+				E318604F24AE503900601F42 /* DDCore */,
+			);
 			productName = DDMac;
 			productReference = E318601B24AE4FB100601F42 /* DDMac.app */;
 			productType = "com.apple.product-type.application";
@@ -266,8 +293,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E318602124AE4FB100601F42 /* ContentView.swift in Sources */,
+				E318602124AE4FB100601F42 /* DDMacView.swift in Sources */,
+				E32C28C424AE5A1700ACAD0A /* HeaderView.swift in Sources */,
+				E32C28CA24AE5D9B00ACAD0A /* NavigationFilterView.swift in Sources */,
+				E32C28CC24AE5DCE00ACAD0A /* DDMacApp.swift in Sources */,
 				E318601F24AE4FB100601F42 /* AppDelegate.swift in Sources */,
+				E32C28CE24AE6EE300ACAD0A /* DDMacModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,6 +628,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E318604F24AE503900601F42 /* DDCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DDCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E318601324AE4FB100601F42 /* Project object */;
 }
