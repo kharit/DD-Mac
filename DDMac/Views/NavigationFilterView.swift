@@ -10,7 +10,7 @@ import SwiftUI
 import DDCore
 
 struct NavigationFilterView: View {
-    var viewModel: DDMacApp
+    @ObservedObject var viewModel: DDMacApp
     
     var body: some View {
         HStack {
@@ -28,14 +28,14 @@ struct NavigationFilterView: View {
 }
 
 struct SolutionFilterView: View {
-    var viewModel: DDMacApp
+    @ObservedObject var viewModel: DDMacApp
     
     var body: some View {
         HStack {
             Text("Solutions")
                 .padding(.horizontal)
             VStack(alignment: .leading) {
-                ForEach(self.viewModel.solutions) { solution in
+                ForEach(self.viewModel.data.solutions) { solution in
                     SolutionView(viewModel: self.viewModel, solution: solution)
                 }
                     .buttonStyle(LinkButtonStyle())
@@ -51,7 +51,7 @@ struct SolutionView: View {
     var body: some View {
         ZStack {
 //            SolutionToggle(viewModel: viewModel)
-            if self.viewModel.currentSolutionID == solution.id {
+            if self.viewModel.currentSolution == solution {
                 Button(
                     solution.name[self.viewModel.lang] ?? "[No translation]",
                     action: { self.viewModel.chooseSolution(self.solution) }
@@ -77,14 +77,14 @@ struct SolutionView: View {
 //}
 
 struct TagFilterView: View {
-    var viewModel: DDMacApp
+    @ObservedObject var viewModel: DDMacApp
     
     var body: some View {
         HStack {
             Text("Tags")
                 .padding(.horizontal)
             VStack(alignment: .leading) {
-                ForEach(self.viewModel.tags) { tag in
+                ForEach(self.viewModel.data.tags) { tag in
                     TagView(viewModel: self.viewModel, tag: tag)
                 }
                     .buttonStyle(LinkButtonStyle())
@@ -99,7 +99,7 @@ struct TagView: View {
     
     var body: some View {
         ZStack {
-            if self.viewModel.currentTagID == tag.id {
+            if self.viewModel.currentTag == tag {
                 Button(
                     tag.name[self.viewModel.lang] ?? "[No translation]",
                     action: { self.viewModel.chooseTag(self.tag) }
@@ -115,29 +115,30 @@ struct TagView: View {
 }
 
 struct ProcessFilterView: View {
-    var viewModel: DDMacApp
+    @ObservedObject var viewModel: DDMacApp
     
     var body: some View {
         HStack {
             Text("Processes")
                 .padding(.horizontal)
             VStack(alignment: .leading) {
-                ForEach(self.viewModel.processes) { process in
+                ForEach(self.viewModel.data.processes) { process in
                     ProcessView(viewModel: self.viewModel, process: process)
                 }
                     .buttonStyle(LinkButtonStyle())
             }
+            .padding(.horizontal)
         }
     }
 }
 
 struct ProcessView: View {
     @ObservedObject var viewModel: DDMacApp
-    var process: BusinessProcess
+    var process: DDProcess
     
     var body: some View {
         ZStack {
-            if self.viewModel.currentProcessID == process.id {
+            if self.viewModel.currentProcess == process {
                 Button(
                     process.name[self.viewModel.lang] ?? "[No translation]",
                     action: { self.viewModel.chooseProcess(self.process) }

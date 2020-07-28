@@ -11,50 +11,36 @@ import DDCore
 
 // ViewModel class (MVVM)
 class DDMacApp: ObservableObject {
-    @Published private(set) var model: DDMacModel = DDMacApp.createDDMacModel()
+    @Published private(set) var model: DDMacModel = DataManager.initWithTestData()
     private(set) var currentLanguage = Language.EN
     var lang: String {
         currentLanguage.rawValue
     }
-    var currentSolutionID: String {
-        model.currentSolutionID
+    var currentSolution: Solution? {
+        model.currentSolution
     }
-    var currentSolution = Solution(id: "ERP01", name: ["EN":"ERP 01"], businessProcesses: [String]())
-    var currentTagID: String {
-        model.currentTagID
+    var currentTag: Tag? {
+        model.currentTag
     }
-    var currentProcessID: String {
-        model.currentProcessID
+    var currentProcess: DDProcess? {
+        model.currentProcess
+    }
+    var currentFlow: Flow? {
+        model.currentFlow
+    }
+    var currentStep: Step? {
+        model.currentStep
     }
     
     static func createDDMacModel() -> DDMacModel{
-        return DDMacModel(
-            solutions: [
-                Solution(id: "ERP01", name: ["EN":"ERP 01"], businessProcesses: [String]()),
-                Solution(id: "WMS01", name: ["EN":"EWM 01"], businessProcesses: [String]()),
-            ],
-            tags: [
-                Tag(id: "1", name: ["EN":"Global"]),
-                Tag(id: "2", name: ["EN":"Kharit EU"]),
-                Tag(id: "3", name: ["EN":"Kharit US"]),
-            ],
-            processes: [
-                BusinessProcess(id: "21", name: ["EN": "Goods receipt from truck"], flows: [String](), relevantTags: [String](), description: ["EN": "Goods receipt from truck description"]),
-                BusinessProcess(id: "22", name: ["EN": "Goods issue to truck"], flows: [String](), relevantTags: [String](), description: ["EN": "Goods issue to truck description"]),
-            ]
-        )
+        let dataManager = DataManager.initWithTestData()
+        return DDMacModel(dataManager: dataManager)
     }
     
     // MARK: - Access to the Model
     
-    var solutions: [Solution] {
-        model.solutions
-    }
-    var tags: [Tag] {
-        model.tags
-    }
-    var processes: [BusinessProcess] {
-        model.processes
+    var data: DataCollection {
+        model.data
     }
     
     // MARK: - Intent(s)
@@ -65,7 +51,13 @@ class DDMacApp: ObservableObject {
     func chooseTag(_ tag: Tag) {
         model.chooseTag(tag)
     }
-    func chooseProcess(_ process: BusinessProcess) {
+    func chooseProcess(_ process: DDProcess) {
         model.chooseProcess(process)
+    }
+    func chooseFlow(_ flow: Flow) {
+        model.chooseFlow(flow)
+    }
+    func chooseStep(_ step: Step) {
+        model.chooseStep(step)
     }
 }

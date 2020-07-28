@@ -18,34 +18,25 @@ struct DDMacView: View {
             Divider()
             NavigationFilterView(viewModel: viewModel)
             Divider()
-            NavigationView {
-                Sidebar()
-                PrimaryView()
-                DetailView()
+            HStack {
+                Spacer()
+                SidebarView(viewModel: viewModel)
+                Spacer()
+                PrimaryView(viewModel: viewModel)
+                Spacer()
+                DetailView(viewModel: viewModel)
+                Spacer()
             }
+                //TODO: create a navigation view insted of HStack
+//            NavigationView {
+//                SidebarView(viewModel: viewModel)
+//                Divider()
+//                PrimaryView()
+//                Divider()
+//                DetailView()
+//            }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-    }
-}
-
-struct Sidebar: View {
-    var body: some View {
-        List(1..<100) { i in
-            Text("Row \(i)")
-        }
-        .listStyle(SidebarListStyle())
-    }
-}
-
-struct PrimaryView: View {
-    var body: some View {
-        Text("Hellow World!")
-    }
-}
-
-struct DetailView: View {
-    var body: some View {
-        Text("Hellow World!")
     }
 }
 
