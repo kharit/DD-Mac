@@ -10,7 +10,7 @@ import SwiftUI
 
 // View type (MVVM)
 struct DDMacView: View {
-    var viewModel: DDMacApp
+    @EnvironmentObject var viewModel: DDMacApp
     
     var body: some View {
         VStack {
@@ -24,7 +24,7 @@ struct DDMacView: View {
                     .padding()
                 GeometryReader { metrics in
                     HStack {
-                        PrimaryView(viewModel: self.viewModel)
+                        PrimaryView(viewModel: self._viewModel)
                             .frame(width: metrics.size.width * 0.60)
                             .padding()
                         DetailView(viewModel: self.viewModel)
@@ -49,6 +49,7 @@ struct DDMacView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        DDMacView(viewModel: DDMacApp())
+        DDMacView()
+            .environmentObject(DDMacApp())
     }
 }

@@ -16,7 +16,7 @@ struct SidebarView: View {
         ZStack {
             if viewModel.currentProcess != nil {
                 VStack(alignment: .leading) {
-                    Text(viewModel.currentProcess!.name[self.viewModel.lang] ?? "[No translation]")
+                    Text(viewModel.currentProcess!.name)
                         .font(.headline)
                     VStack(alignment: .leading) {
                         if self.viewModel.data.flows != [] {
@@ -49,12 +49,12 @@ struct FlowView: View {
     //            SolutionToggle(viewModel: viewModel)
                 if self.viewModel.currentFlow == flow {
                     Button(
-                        flow.name[self.viewModel.lang] ?? "[No translation]",
+                        flow.name,
                         action: { self.viewModel.chooseFlow(self.flow) }
                     ).foregroundColor(.primary)
                 } else {
                     Button(
-                        flow.name[self.viewModel.lang] ?? "[No translation]",
+                        flow.name,
                         action: { self.viewModel.chooseFlow(self.flow) }
                     ).foregroundColor(.secondary)
                 }

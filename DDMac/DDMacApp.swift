@@ -8,10 +8,11 @@
 
 import SwiftUI
 import DDCore
+import Combine
 
 // ViewModel class (MVVM)
 final class DDMacApp: ObservableObject {
-    @Published private(set) var model: DataManager = DDMacApp.createDataManager()
+    @Published var model: DataManager = DDMacApp.createDataManager()
     @Published private(set) var currentLanguage = Language.EN
     @Published var currentSolution: Solution? = nil
     @Published var currentTag: Tag? = nil
@@ -62,7 +63,11 @@ final class DDMacApp: ObservableObject {
         rebuildData()
     }
     
-    func edit(_ something: String) {
-        editing = something
+    func edit(_ someID: String) {
+        editing = someID
+    }
+    
+    func save(_ someID: String) {
+        editing = ""
     }
 }

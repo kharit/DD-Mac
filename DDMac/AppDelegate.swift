@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Create the SwiftUI view that provides the window contents.
         
         let app = DDMacApp()
-        let contentView = DDMacView(viewModel: app)
+        let contentView = DDMacView()
             .environmentObject(app)
 
         // Create the window and set the content view. 

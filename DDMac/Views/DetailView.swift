@@ -17,7 +17,7 @@ struct DetailView: View {
             if viewModel.currentStep != nil {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text(viewModel.currentStep!.name[self.viewModel.lang] ?? "[No translation]")
+                        Text(viewModel.currentStep!.name)
                             .font(.title)
                         VStack {
                             if self.viewModel.data.techSteps != [] {
@@ -51,9 +51,9 @@ struct TechStepView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(techStep.name[self.viewModel.lang] ?? "[No translation]")
+            Text(techStep.name)
             .font(.headline)
-            Text(techStep.description[self.viewModel.lang] ?? "[No translation]")
+            Text(techStep.description)
         }
         .padding()
     }

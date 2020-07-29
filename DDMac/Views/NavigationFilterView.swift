@@ -57,12 +57,12 @@ struct SolutionView: View {
 //            SolutionToggle(viewModel: viewModel)
             if self.viewModel.currentSolution == solution {
                 Button(
-                    solution.name[self.viewModel.lang] ?? "[No translation]",
+                    solution.name,
                     action: { self.viewModel.chooseSolution(self.solution) }
                 ).foregroundColor(.primary)
             } else {
                 Button(
-                    solution.name[self.viewModel.lang] ?? "[No translation]",
+                    solution.name,
                     action: { self.viewModel.chooseSolution(self.solution) }
                 ).foregroundColor(.secondary)
             }
@@ -75,7 +75,7 @@ struct SolutionView: View {
 //
 //    var body: some View {
 //        List(viewModel.solutions, selection: $viewModel.currentSolution) { solution in
-//            Text(solution.name[self.viewModel.lang] ?? "[No translation]")
+//            Text(solution.name)
 //        }
 //    }
 //}
@@ -109,12 +109,12 @@ struct TagView: View {
         ZStack {
             if self.viewModel.currentTag == tag {
                 Button(
-                    tag.name[self.viewModel.lang] ?? "[No translation]",
+                    tag.name,
                     action: { self.viewModel.chooseTag(self.tag) }
                 ).foregroundColor(.primary)
             } else {
                 Button(
-                    tag.name[self.viewModel.lang] ?? "[No translation]",
+                    tag.name,
                     action: { self.viewModel.chooseTag(self.tag) }
                 ).foregroundColor(.secondary)
             }
@@ -152,12 +152,12 @@ struct ProcessView: View {
         ZStack {
             if self.viewModel.currentProcess == process {
                 Button(
-                    process.name[self.viewModel.lang] ?? "[No translation]",
+                    process.name,
                     action: { self.viewModel.chooseProcess(self.process) }
                 ).foregroundColor(.primary)
             } else {
                 Button(
-                    process.name[self.viewModel.lang] ?? "[No translation]",
+                    process.name,
                     action: { self.viewModel.chooseProcess(self.process) }
                 ).foregroundColor(.secondary)
             }
