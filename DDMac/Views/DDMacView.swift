@@ -18,14 +18,20 @@ struct DDMacView: View {
             Divider()
             NavigationFilterView(viewModel: viewModel)
             Divider()
-            HStack {
-                Spacer()
+            HStack(alignment: .top, spacing: 30.0) {
                 SidebarView(viewModel: viewModel)
-                Spacer()
-                PrimaryView(viewModel: viewModel)
-                Spacer()
-                DetailView(viewModel: viewModel)
-                Spacer()
+                    .frame(width: 300)
+                    .padding()
+                GeometryReader { metrics in
+                    HStack {
+                        PrimaryView(viewModel: self.viewModel)
+                            .frame(width: metrics.size.width * 0.60)
+                            .padding()
+                        DetailView(viewModel: self.viewModel)
+                            .frame(width: metrics.size.width * 0.40)
+                            .padding()
+                    }
+                }
             }
                 //TODO: create a navigation view insted of HStack
 //            NavigationView {

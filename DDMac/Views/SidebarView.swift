@@ -18,10 +18,17 @@ struct SidebarView: View {
                 VStack(alignment: .leading) {
                     Text(viewModel.currentProcess!.name[self.viewModel.lang] ?? "[No translation]")
                         .font(.headline)
-                    ForEach(self.viewModel.data.flows) { flow in
-                        FlowView(viewModel: self.viewModel, flow: flow)
+                    VStack(alignment: .leading) {
+                        if self.viewModel.data.flows != [] {
+                            ForEach(self.viewModel.data.flows) { flow in
+                                FlowView(viewModel: self.viewModel, flow: flow)
+                            }
+                            .font(.headline)
+                        } else {
+                            Text("There are no flows to display here.")
+                        }
                     }
-                        .font(.headline)
+                        .padding()
                 }
                     .padding()
                     .buttonStyle(LinkButtonStyle())

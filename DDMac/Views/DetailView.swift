@@ -13,20 +13,33 @@ struct DetailView: View {
     @ObservedObject var viewModel: DDMacApp
     
     var body: some View {
-        ZStack {
+        ScrollView {
             if viewModel.currentStep != nil {
-                VStack(alignment: .leading) {
-                    Text(viewModel.currentStep!.name[self.viewModel.lang] ?? "[No translation]")
-                        .font(.title)
-                    ForEach(self.viewModel.data.techSteps) { techStep in
-                        TechStepView(viewModel: self.viewModel, techStep: techStep)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(viewModel.currentStep!.name[self.viewModel.lang] ?? "[No translation]")
+                            .font(.title)
+                        VStack {
+                            if self.viewModel.data.techSteps != [] {
+                                ForEach(self.viewModel.data.techSteps) { techStep in
+                                    TechStepView(viewModel: self.viewModel, techStep: techStep)
+                                }
+                            } else {
+                                Text("There are no technical steps to display here.")
+                                    .padding()
+                            }
+                            
+                        }
                     }
                 }
                     .padding()
                     .buttonStyle(LinkButtonStyle())
                     
             } else {
-                Text("Please select a step in the primary area")
+                HStack {
+                    Text("Please select a step in the primary area")
+                    Spacer()
+                }
             }
         }
     }

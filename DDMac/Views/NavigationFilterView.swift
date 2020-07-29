@@ -35,10 +35,14 @@ struct SolutionFilterView: View {
             Text("Solutions")
                 .padding(.horizontal)
             VStack(alignment: .leading) {
-                ForEach(self.viewModel.data.solutions) { solution in
-                    SolutionView(viewModel: self.viewModel, solution: solution)
+                if self.viewModel.data.solutions != [] {
+                    ForEach(self.viewModel.data.solutions) { solution in
+                        SolutionView(viewModel: self.viewModel, solution: solution)
+                    }
+                        .buttonStyle(LinkButtonStyle())
+                } else {
+                    Text("There are no solutions to display here.")
                 }
-                    .buttonStyle(LinkButtonStyle())
             }
         }
     }
@@ -84,10 +88,14 @@ struct TagFilterView: View {
             Text("Tags")
                 .padding(.horizontal)
             VStack(alignment: .leading) {
-                ForEach(self.viewModel.data.tags) { tag in
-                    TagView(viewModel: self.viewModel, tag: tag)
+                if self.viewModel.data.tags != [] {
+                    ForEach(self.viewModel.data.tags) { tag in
+                        TagView(viewModel: self.viewModel, tag: tag)
+                    }
+                        .buttonStyle(LinkButtonStyle())
+                } else {
+                    Text("There are no solutions to display here.")
                 }
-                    .buttonStyle(LinkButtonStyle())
             }
         }
     }
@@ -122,10 +130,14 @@ struct ProcessFilterView: View {
             Text("Processes")
                 .padding(.horizontal)
             VStack(alignment: .leading) {
-                ForEach(self.viewModel.data.processes) { process in
-                    ProcessView(viewModel: self.viewModel, process: process)
+                if self.viewModel.data.processes != [] {
+                    ForEach(self.viewModel.data.processes) { process in
+                        ProcessView(viewModel: self.viewModel, process: process)
+                    }
+                        .buttonStyle(LinkButtonStyle())
+                } else {
+                    Text("There are no processes to display here.")
                 }
-                    .buttonStyle(LinkButtonStyle())
             }
             .padding(.horizontal)
         }

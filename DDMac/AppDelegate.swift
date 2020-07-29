@@ -20,6 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let app = DDMacApp()
         let contentView = DDMacView(viewModel: app)
+            .environmentObject(app)
 
         // Create the window and set the content view. 
         window = NSWindow(

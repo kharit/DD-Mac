@@ -10,54 +10,59 @@ import SwiftUI
 import DDCore
 
 // ViewModel class (MVVM)
-class DDMacApp: ObservableObject {
-    @Published private(set) var model: DDMacModel = DataManager.initWithTestData()
-    private(set) var currentLanguage = Language.EN
+final class DDMacApp: ObservableObject {
+    @Published private(set) var model: DataManager = DDMacApp.createDataManager()
+    @Published private(set) var currentLanguage = Language.EN
+    @Published var currentSolution: Solution? = nil
+    @Published var currentTag: Tag? = nil
+    @Published var currentProcess: DDProcess? = nil
+    @Published var currentFlow: Flow? = nil
+    @Published var currentStep: Step? = nil
+    
+    @Published var editing: String = ""
+    
     var lang: String {
         currentLanguage.rawValue
     }
-    var currentSolution: Solution? {
-        model.currentSolution
-    }
-    var currentTag: Tag? {
-        model.currentTag
-    }
-    var currentProcess: DDProcess? {
-        model.currentProcess
-    }
-    var currentFlow: Flow? {
-        model.currentFlow
-    }
-    var currentStep: Step? {
-        model.currentStep
-    }
     
-    static func createDDMacModel() -> DDMacModel{
-        let dataManager = DataManager.initWithTestData()
-        return DDMacModel(dataManager: dataManager)
+    static func createDataManager() -> DataManager {
+        return DataManager.initWithTestData()
     }
     
     // MARK: - Access to the Model
     
     var data: DataCollection {
-        model.data
+        model.displayData
     }
     
     // MARK: - Intent(s)
     
+    func rebuildData() {
+        model.rebuildDisplayData(solution: currentSolution, tag: currentTag, process: currentProcess, flow: currentFlow, step: currentStep)
+    }
+    
     func chooseSolution(_ solution: Solution) {
-        model.chooseSolution(solution)
+        currentSolution = solution
+        rebuildData()
     }
     func chooseTag(_ tag: Tag) {
-        model.chooseTag(tag)
+        currentTag = tag
+        rebuildData()
     }
     func chooseProcess(_ process: DDProcess) {
-        model.chooseProcess(process)
+        currentProcess = process
+        rebuildData()
     }
     func chooseFlow(_ flow: Flow) {
-        model.chooseFlow(flow)
+        currentFlow = flow
+        rebuildData()
     }
     func chooseStep(_ step: Step) {
-        model.chooseStep(step)
+        currentStep = step
+        rebuildData()
+    }
+    
+    func edit(_ something: String) {
+        editing = something
     }
 }
