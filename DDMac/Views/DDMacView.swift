@@ -16,18 +16,18 @@ struct DDMacView: View {
         VStack {
             HeaderView()
             Divider()
-            NavigationFilterView(viewModel: viewModel)
+            NavigationFilterView()
             Divider()
             HStack(alignment: .top, spacing: 30.0) {
-                SidebarView(viewModel: viewModel)
+                SidebarView()
                     .frame(width: 300)
                     .padding()
                 GeometryReader { metrics in
                     HStack {
-                        PrimaryView(viewModel: self._viewModel)
+                        PrimaryView()
                             .frame(width: metrics.size.width * 0.60)
                             .padding()
-                        DetailView(viewModel: self.viewModel)
+                        DetailView()
                             .frame(width: metrics.size.width * 0.40)
                             .padding()
                     }
@@ -50,6 +50,7 @@ struct DDMacView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         DDMacView()
-            .environmentObject(DDMacApp())
+            .environmentObject(DDMacApp.initPreview())
+        
     }
 }

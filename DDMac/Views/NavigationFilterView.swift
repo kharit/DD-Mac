@@ -10,7 +10,7 @@ import SwiftUI
 import DDCore
 
 struct NavigationFilterView: View {
-    @ObservedObject var viewModel: DDMacApp
+    @EnvironmentObject var viewModel: DDMacApp
     
     var body: some View {
         HStack {
@@ -54,8 +54,7 @@ struct SolutionView: View {
     
     var body: some View {
         ZStack {
-//            SolutionToggle(viewModel: viewModel)
-            if self.viewModel.currentSolution == solution {
+            if self.viewModel.currentSolutionID == solution.id {
                 Button(
                     solution.name,
                     action: { self.viewModel.chooseSolution(self.solution) }
@@ -107,7 +106,7 @@ struct TagView: View {
     
     var body: some View {
         ZStack {
-            if self.viewModel.currentTag == tag {
+            if self.viewModel.currentTagID == tag.id {
                 Button(
                     tag.name,
                     action: { self.viewModel.chooseTag(self.tag) }
@@ -150,7 +149,7 @@ struct ProcessView: View {
     
     var body: some View {
         ZStack {
-            if self.viewModel.currentProcess == process {
+            if self.viewModel.currentProcessID == process.id {
                 Button(
                     process.name,
                     action: { self.viewModel.chooseProcess(self.process) }
@@ -167,8 +166,7 @@ struct ProcessView: View {
 
 struct NavigationFilterView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationFilterView(
-            viewModel: DDMacApp()
-        )
+        NavigationFilterView()
+            .environmentObject(DDMacApp.initPreview())
     }
 }

@@ -10,13 +10,16 @@ import SwiftUI
 import DDCore
 
 struct SidebarView: View {
-    @ObservedObject var viewModel: DDMacApp
+    @EnvironmentObject var viewModel: DDMacApp
+    var currentProcess: DDProcess? {
+        viewModel.data.processes.first(where: { $0.id == viewModel.currentProcessID })
+    }
     
     var body: some View {
         ZStack {
-            if viewModel.currentProcess != nil {
+            if self.currentProcess != nil {
                 VStack(alignment: .leading) {
-                    Text(viewModel.currentProcess!.name)
+                    Text(self.currentProcess!.name)
                         .font(.headline)
                     VStack(alignment: .leading) {
                         if self.viewModel.data.flows != [] {
@@ -46,8 +49,7 @@ struct FlowView: View {
     
     var body: some View {
             ZStack {
-    //            SolutionToggle(viewModel: viewModel)
-                if self.viewModel.currentFlow == flow {
+                if self.viewModel.currentFlowID == flow.id {
                     Button(
                         flow.name,
                         action: { self.viewModel.chooseFlow(self.flow) }
@@ -64,8 +66,7 @@ struct FlowView: View {
 
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
-        SidebarView(
-            viewModel: DDMacApp()
-        )
+        SidebarView()
+            .environmentObject(DDMacApp.initPreview())
     }
 }

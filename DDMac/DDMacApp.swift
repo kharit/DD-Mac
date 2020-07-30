@@ -14,11 +14,11 @@ import Combine
 final class DDMacApp: ObservableObject {
     @Published var model: DataManager = DDMacApp.createDataManager()
     @Published private(set) var currentLanguage = Language.EN
-    @Published var currentSolution: Solution? = nil
-    @Published var currentTag: Tag? = nil
-    @Published var currentProcess: DDProcess? = nil
-    @Published var currentFlow: Flow? = nil
-    @Published var currentStep: Step? = nil
+    @Published var currentSolutionID = ""
+    @Published var currentTagID = ""
+    @Published var currentProcessID = ""
+    @Published var currentFlowID = ""
+    @Published var currentStepID = ""
     
     @Published var editing: String = ""
     
@@ -39,27 +39,28 @@ final class DDMacApp: ObservableObject {
     // MARK: - Intent(s)
     
     func rebuildData() {
-        model.rebuildDisplayData(solution: currentSolution, tag: currentTag, process: currentProcess, flow: currentFlow, step: currentStep)
+        model.rebuildDisplayData(solution: currentSolutionID, tag: currentTagID, process: currentProcessID, flow: currentFlowID, step: currentStepID)
+        // TODO: if selected item is not on screen, drop all childs from the screen as well
     }
     
     func chooseSolution(_ solution: Solution) {
-        currentSolution = solution
+        currentSolutionID = solution.id
         rebuildData()
     }
     func chooseTag(_ tag: Tag) {
-        currentTag = tag
+        currentTagID = tag.id
         rebuildData()
     }
     func chooseProcess(_ process: DDProcess) {
-        currentProcess = process
+        currentProcessID = process.id
         rebuildData()
     }
     func chooseFlow(_ flow: Flow) {
-        currentFlow = flow
+        currentFlowID = flow.id
         rebuildData()
     }
     func chooseStep(_ step: Step) {
-        currentStep = step
+        currentStepID = step.id
         rebuildData()
     }
     
@@ -67,7 +68,21 @@ final class DDMacApp: ObservableObject {
         editing = someID
     }
     
-    func save(_ someID: String) {
+    func saveStep(_ step: Step) {
         editing = ""
+        
+        // TODO: Check if the step is used in other flows
+        
+        model.saveStep(step)
+    }
+    
+    // adds step to a given position or to an end if step is nil
+    func addStep(_ step: Step, before beforeStep: Step?) {
+        model.addStep(step, to: self.currentFlowID, before: beforeStep)
+    }
+    
+    // adds step to a given position or to an end if step is nil
+    func addSystem() {
+        
     }
 }

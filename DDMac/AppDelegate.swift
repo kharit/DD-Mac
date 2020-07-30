@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the SwiftUI view that provides the window contents.
         
-        let app = DDMacApp()
+        let app = DDMacApp.initPreview()
         let contentView = DDMacView()
             .environmentObject(app)
 

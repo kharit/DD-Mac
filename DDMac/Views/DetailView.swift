@@ -10,14 +10,17 @@ import SwiftUI
 import DDCore
 
 struct DetailView: View {
-    @ObservedObject var viewModel: DDMacApp
+    @EnvironmentObject var viewModel: DDMacApp
+    var currentStep: Step? {
+        viewModel.data.steps.first(where: { $0.id == viewModel.currentStepID })!
+    }
     
     var body: some View {
         ScrollView {
-            if viewModel.currentStep != nil {
+            if self.currentStep != nil {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text(viewModel.currentStep!.name)
+                        Text(self.currentStep!.name)
                             .font(.title)
                         VStack {
                             if self.viewModel.data.techSteps != [] {
@@ -61,6 +64,7 @@ struct TechStepView: View {
 
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailView(viewModel: DDMacApp())
+        DetailView()
+            .environmentObject(DDMacApp.initPreview())
     }
 }
