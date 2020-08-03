@@ -27,7 +27,7 @@ final class DDMacApp: ObservableObject {
     }
     
     static func createDataManager() -> DataManager {
-        return DataManager.initWithTestData()
+        return DataManager.initWithTestFolder()
     }
     
     // MARK: - Access to the Model
@@ -81,8 +81,7 @@ final class DDMacApp: ObservableObject {
         model.addStep(step, to: self.currentFlowID, before: beforeStep)
     }
     
-    // adds step to a given position or to an end if step is nil
-    func addSystem() {
-        
+    func addSystem(_ system: System) {
+        model.addSystem(system)
     }
 }

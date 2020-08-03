@@ -12,7 +12,7 @@ import DDCore
 struct DetailView: View {
     @EnvironmentObject var viewModel: DDMacApp
     var currentStep: Step? {
-        viewModel.data.steps.first(where: { $0.id == viewModel.currentStepID })!
+        viewModel.data.steps.first(where: { $0.id == viewModel.currentStepID })
     }
     
     var body: some View {

@@ -75,7 +75,9 @@ struct StepEditMetaView: View {
 
 struct StepEditMetaSystemsView: View {
     @EnvironmentObject var viewModel: DDMacApp
+    @State var showModal = false
     var step: Step
+    
     var systemsArray: [System] {
         var returnArray = [System]()
         for system in step.systems {
@@ -90,11 +92,12 @@ struct StepEditMetaSystemsView: View {
             ForEach(viewModel.data.systems) { system in
                 StepEditSingleSystemView(step: self.step, system: system)
             }
-            Button(
-                "Add new",
-                action: { self.viewModel.addSystem() }
-                // TODO: pressing enter should execute Save?
-            )
+            Button("Add new") {
+                self.showModal.toggle()
+            }.sheet(isPresented: $showModal) {
+                SystemCreateView(showModal: self.$showModal)
+                    .environmentObject(self.viewModel)
+            }
                 .buttonStyle(LinkButtonStyle())
         }
     }

@@ -34,12 +34,12 @@ struct PrimaryView: View {
                                         }
                                     }
                                 }
-                                addStepButton()
                             } else {
                                 Text("There are no steps to display here.")
                                     .padding()
                             }
                         }
+                        addStepButton()
                         Spacer()
                     }
                     Spacer()
