@@ -22,7 +22,7 @@ struct StepEditView: View {
             TextField("Name", text: $viewModel.model.displayData.steps[stepIndex].name)
                 .foregroundColor(.primary)
                 .font(.title)
-            StepEditMetaView(step: step)
+            StepEditMetaView(step: step, responsible: step.responsible)
             TextField("Description", text: $viewModel.model.displayData.steps[stepIndex].description)
                 .font(.body)
                 .allowsTightening(false)
@@ -34,10 +34,22 @@ struct StepEditView: View {
 
 struct StepEditMetaView: View {
     @EnvironmentObject var viewModel: DDMacApp
-    var step: Step
+    @State var step: Step
     var stepIndex: Int {
         viewModel.data.steps.firstIndex(where: { $0.id == step.id })!
     }
+    @State var responsible: String {
+        didSet {
+            if self.responsible == "AddNewResponsible" {
+                self.showModal = true
+            } else {
+                if self.step.responsible != self.responsible {
+                    self.step.responsible = self.responsible
+                }
+            }
+        }
+    }
+    @State var showModal = false
     
     var body: some View {
         VStack {
@@ -52,13 +64,16 @@ struct StepEditMetaView: View {
                 Spacer()
             }
             HStack {
-                Picker(selection: $viewModel.model.displayData.steps[stepIndex].responsible, label: Text("")) {
+                Picker(selection: $responsible, label: Text("")) {
                     ForEach(self.viewModel.data.responsibles) { responsible in
                         Text(responsible.name).tag(responsible.id)
                         // TODO: Add logic for adding Responsible
                     }
                     Text("Add new responsible").tag("AddNewResponsible")
-                }
+                }   .sheet(isPresented: $showModal) {
+                        ResponsibleCreateView(showModal: self.$showModal, step: self.$step)
+                            .environmentObject(self.viewModel)
+                    }
                     .frame(maxWidth: 200.0)
                 Picker(selection: $viewModel.model.displayData.steps[stepIndex].stepType, label: Text("")) {
                     Text(StepType.Automatic.rawValue).tag(StepType.Automatic.rawValue)
@@ -76,7 +91,7 @@ struct StepEditMetaView: View {
 struct StepEditMetaSystemsView: View {
     @EnvironmentObject var viewModel: DDMacApp
     @State var showModal = false
-    var step: Step
+    @State var step: Step
     
     var systemsArray: [System] {
         var returnArray = [System]()
@@ -95,7 +110,7 @@ struct StepEditMetaSystemsView: View {
             Button("Add new") {
                 self.showModal.toggle()
             }.sheet(isPresented: $showModal) {
-                SystemCreateView(showModal: self.$showModal)
+                SystemCreateView(showModal: self.$showModal, step: self.$step)
                     .environmentObject(self.viewModel)
             }
                 .buttonStyle(LinkButtonStyle())

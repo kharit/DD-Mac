@@ -83,7 +83,7 @@ struct StepCreateMetaSystemsView: View {
             Button("Add new") {
                 self.showModal.toggle()
             }.sheet(isPresented: $showModal) {
-                SystemCreateView(showModal: self.$showModal)
+                SystemCreateView(showModal: self.$showModal, step: self.$step)
                     .environmentObject(self.viewModel)
             }
                 .buttonStyle(LinkButtonStyle())

@@ -84,4 +84,8 @@ final class DDMacApp: ObservableObject {
     func addSystem(_ system: System) {
         model.addSystem(system)
     }
+    
+    func addResponsible(_ responsible: Responsible) {
+        model.addResponsible(responsible)
+    }
 }
