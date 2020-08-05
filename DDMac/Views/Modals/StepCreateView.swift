@@ -33,6 +33,7 @@ struct StepCreateMetaView: View {
     var stepIndex: Int {
         viewModel.data.steps.firstIndex(where: { $0.id == step.id })!
     }
+    @State var showModal = false
     
     var body: some View {
         VStack {
@@ -46,9 +47,14 @@ struct StepCreateMetaView: View {
                         Text(responsible.name).tag(responsible.id)
                         // TODO: Add logic for adding Responsible
                     }
-                    Text("Add new responsible").tag("AddNewResponsible")
                 }
                     .frame(maxWidth: 200.0)
+                Button("New responsible") {
+                    self.showModal.toggle()
+                }.sheet(isPresented: $showModal) {
+                    ResponsibleCreateView(showModal: self.$showModal, step: self.$step)
+                        .environmentObject(self.viewModel)
+                }
                 Picker(selection: self.$step.stepType, label: Text("")) {
                     Text(StepType.Automatic.rawValue).tag(StepType.Automatic.rawValue)
                     Text(StepType.Manual.rawValue).tag(StepType.Manual.rawValue)
@@ -80,7 +86,7 @@ struct StepCreateMetaSystemsView: View {
             ForEach(viewModel.data.systems) { system in
                 StepCreateSingleSystemView(step: self.$step, system: system)
             }
-            Button("Add new") {
+            Button("New system") {
                 self.showModal.toggle()
             }.sheet(isPresented: $showModal) {
                 SystemCreateView(showModal: self.$showModal, step: self.$step)

@@ -12,7 +12,7 @@ import Combine
 
 // ViewModel class (MVVM)
 final class DDMacApp: ObservableObject {
-    @Published var model: DataManager = DDMacApp.createDataManager()
+    @Published private(set) var model: DataManager = DDMacApp.createDataManager()
     @Published private(set) var currentLanguage = Language.EN
     @Published var currentSolutionID = ""
     @Published var currentTagID = ""
@@ -68,12 +68,30 @@ final class DDMacApp: ObservableObject {
         editing = someID
     }
     
-    func saveStep(_ step: Step) {
+    func updateStep(_ step: Step) {
         editing = ""
         
         // TODO: Check if the step is used in other flows
         
-        model.saveStep(step)
+        if !data.steps.contains(step) {
+            model.updateStep(step)
+        }
+    }
+    
+    func updateSystem(_ system: System) {
+        if !data.systems.contains(system) {
+            model.updateSystem(system)
+        }
+    }
+    
+    func updateSolution(_ solution: Solution) {
+        if !data.solutions.contains(solution) {
+            model.updateSolution(solution)
+        }
+    }
+    
+    func deleteSolution(_ solution: Solution) {
+        model.deleteSolution(solution)
     }
     
     // adds step to a given position or to an end if step is nil

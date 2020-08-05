@@ -11,7 +11,7 @@ import DDCore
 
 struct StepEditView: View {
     @EnvironmentObject var viewModel: DDMacApp
-    var step: Step
+    @State var step: Step
     var stepIndex: Int {
         viewModel.data.steps.firstIndex(where: { $0.id == step.id })!
     }
@@ -19,11 +19,11 @@ struct StepEditView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10.0) {
-            TextField("Name", text: $viewModel.model.displayData.steps[stepIndex].name)
+            TextField("Name", text: self.$step.name)
                 .foregroundColor(.primary)
                 .font(.title)
-            StepEditMetaView(step: step, responsible: step.responsible)
-            TextField("Description", text: $viewModel.model.displayData.steps[stepIndex].description)
+            StepEditMetaView(step: $step)
+            TextField("Description", text: self.$step.description)
                 .font(.body)
                 .allowsTightening(false)
             // TODO: Change TextField to a TextEditor upon its release with Big Sur (or implement NSTextField if it is needed before)
@@ -34,48 +34,42 @@ struct StepEditView: View {
 
 struct StepEditMetaView: View {
     @EnvironmentObject var viewModel: DDMacApp
-    @State var step: Step
+    @Binding var step: Step
     var stepIndex: Int {
         viewModel.data.steps.firstIndex(where: { $0.id == step.id })!
     }
-    @State var responsible: String {
-        didSet {
-            if self.responsible == "AddNewResponsible" {
-                self.showModal = true
-            } else {
-                if self.step.responsible != self.responsible {
-                    self.step.responsible = self.responsible
-                }
-            }
-        }
-    }
     @State var showModal = false
+    var responsiblesSorted: [Responsible] {
+        self.viewModel.data.responsibles.sorted(by: { $0.name < $1.name })
+    }
     
     var body: some View {
         VStack {
             HStack(spacing: 20.0) {
                 Button(
                     "Save",
-                    action: { self.viewModel.saveStep(self.step) }
+                    action: { self.viewModel.updateStep(self.step) }
                     // TODO: pressing enter should execute Save?
                 )
                     .buttonStyle(DefaultButtonStyle())
-                StepEditMetaSystemsView(step: step)
+                StepEditMetaSystemsView(step: self.$step)
                 Spacer()
             }
             HStack {
-                Picker(selection: $responsible, label: Text("")) {
-                    ForEach(self.viewModel.data.responsibles) { responsible in
+                Picker(selection: self.$step.responsible, label: Text("")) {
+                    ForEach(responsiblesSorted) { responsible in
                         Text(responsible.name).tag(responsible.id)
                         // TODO: Add logic for adding Responsible
                     }
-                    Text("Add new responsible").tag("AddNewResponsible")
-                }   .sheet(isPresented: $showModal) {
-                        ResponsibleCreateView(showModal: self.$showModal, step: self.$step)
-                            .environmentObject(self.viewModel)
-                    }
+                }
                     .frame(maxWidth: 200.0)
-                Picker(selection: $viewModel.model.displayData.steps[stepIndex].stepType, label: Text("")) {
+                Button("New responsible") {
+                    self.showModal.toggle()
+                }.sheet(isPresented: $showModal) {
+                    ResponsibleCreateView(showModal: self.$showModal, step: self.$step)
+                        .environmentObject(self.viewModel)
+                }
+                Picker(selection: self.$step.stepType, label: Text("")) {
                     Text(StepType.Automatic.rawValue).tag(StepType.Automatic.rawValue)
                     Text(StepType.Manual.rawValue).tag(StepType.Manual.rawValue)
                     Text(StepType.OutOfSystem.rawValue).tag(StepType.OutOfSystem.rawValue)
@@ -91,23 +85,17 @@ struct StepEditMetaView: View {
 struct StepEditMetaSystemsView: View {
     @EnvironmentObject var viewModel: DDMacApp
     @State var showModal = false
-    @State var step: Step
-    
-    var systemsArray: [System] {
-        var returnArray = [System]()
-        for system in step.systems {
-            let index = viewModel.data.systems.firstIndex(where: { $0.id == system })!
-            returnArray.append(viewModel.data.systems[index])
-        }
-        return returnArray
+    @Binding var step: Step
+    var sortedSystems: [System] {
+        viewModel.data.systems.sorted(by: { $0.name < $1.name })
     }
     
     var body: some View {
         HStack(spacing: 10.0) {
-            ForEach(viewModel.data.systems) { system in
-                StepEditSingleSystemView(step: self.step, system: system)
+            ForEach(sortedSystems) { system in
+                StepEditSingleSystemView(step: self.$step, system: system)
             }
-            Button("Add new") {
+            Button("New system") {
                 self.showModal.toggle()
             }.sheet(isPresented: $showModal) {
                 SystemCreateView(showModal: self.$showModal, step: self.$step)
@@ -120,7 +108,7 @@ struct StepEditMetaSystemsView: View {
 
 struct StepEditSingleSystemView: View {
     @EnvironmentObject var viewModel: DDMacApp
-    var step: Step
+    @Binding var step: Step
     var system: System
     var stepIndex: Int {
         viewModel.data.steps.firstIndex(where: { $0.id == step.id })!
@@ -141,23 +129,19 @@ struct StepEditSingleSystemView: View {
             if systemIsOn {
                 Button(
                     system.name,
-                    action: { self.systemDeactivate() }
+                    action: {
+                        let systemIndex = self.step.systems.firstIndex(of: self.system.id)!
+                        self.step.systems.remove(at: systemIndex)
+                }
                 ).foregroundColor(.primary)
             } else {
                 Button(
                     system.name,
-                    action: { self.systemActivate() }
+                    action: {
+                        self.step.systems.append(self.system.id)
+                }
                 ).foregroundColor(.secondary)
             }
         }
-    }
-
-    func systemDeactivate() {
-        viewModel.model.displayData.steps[stepIndex].systems.remove(at: systemIndex!)
-    }
-    
-    func systemActivate() {
-        viewModel.model.displayData.steps[stepIndex].systems.append(self.system.id)
-        viewModel.model.displayData.steps[stepIndex].systems.sort()
     }
 }

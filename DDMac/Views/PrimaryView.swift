@@ -183,18 +183,19 @@ struct StepMetaView: View {
 struct StepMetaSystemView: View {
     @EnvironmentObject var viewModel: DDMacApp
     var step: Step
-    var systemsArray: [System] {
-        var returnArray = [System]()
+    var stepSystems: [System] {
+        var stepSystems = [System]()
         for system in step.systems {
             let index = viewModel.data.systems.firstIndex(where: { $0.id == system })!
-            returnArray.append(viewModel.data.systems[index])
+            stepSystems.append(viewModel.data.systems[index])
         }
-        return returnArray
+        stepSystems = stepSystems.sorted(by: { $0.name < $1.name })
+        return stepSystems
     }
     
     var body: some View {
         HStack(spacing: 10.0) {
-            ForEach(systemsArray) { system in
+            ForEach(stepSystems) { system in
                 Text(system.name)
             }
         }
